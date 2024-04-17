@@ -7,19 +7,16 @@ const path = require('path');
 let index = require('./routes/index');
 let image = require('./routes/image');
 
-// connecting the database
-let mongodb_url = 'mongodb://localhost:27017/';
-let dbName = 'darkroom';
-mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
-    if (err) console.log(err)
-});
+// Replace `<password>` with your actual password
+const mongodb_url = 'mongodb+srv://jncheg:<password>@cluster1.katgoki.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1';
 
-// test if the database has connected successfully
-let db = mongoose.connection;
-db.once('open', ()=>{
-    console.log('Database connected successfully')
+// Connecting to the database
+mongoose.connect(mongodb_url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-
+.then(() => console.log('Database connected successfully'))
+.catch(err => console.error('Error connecting to database:', err));
 // Initializing the app
 const app = express();
 
