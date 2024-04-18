@@ -2,23 +2,33 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const config = require('./_config');
 
 // Define routes
 let index = require('./routes/index');
 let image = require('./routes/image');
 
-// Replace `<password>` with your actual password
-const mongodb_url = 'mongodb+srv://jncheg:joannalee@cluster1.katgoki.mongodb.net/darkroom?retryWrites=true&w=majority&appName=Cluster1';
-
-// Connecting to the database
-mongoose.connect(mongodb_url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Database connected successfully'))
-.catch(err => console.error('Error connecting to database:', err));
 // Initializing the app
 const app = express();
+
+// connecting the database
+
+const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env]
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  },(err)=>{
+    if (err) {
+        console.log(err)
+    }else{
+        console.log(`Connected to Database: ${MONGODB_URI}`)
+    }
+});
+
+// test if the database has connected successfully
+// let db = mongoose.connection;
+// db.once('open', ()=>{
+//     console.log('Database connected successfully')
+// })
+
+
 
 
 // View Engine
@@ -37,7 +47,10 @@ app.use('/image', image);
 
 
  
-const PORT = process.env.PORT || 5005;
+const PORT = process.env.PORT || 5007;
 app.listen(PORT,() =>{
     console.log(`Server is listening at http://localhost:${PORT}`)
 });
+
+
+module.exports = app;
