@@ -8,7 +8,7 @@ let index = require('./routes/index');
 let image = require('./routes/image');
 
 // Replace `<password>` with your actual password
-const mongodb_url = 'mongodb+srv://jncheg:<password>@cluster1.katgoki.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1';
+const mongodb_url = 'mongodb+srv://jncheg:joannalee@cluster1.katgoki.mongodb.net/darkroom?retryWrites=true&w=majority&appName=Cluster1';
 
 // Connecting to the database
 mongoose.connect(mongodb_url, {
@@ -37,7 +37,7 @@ app.use('/image', image);
 
 
  
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5004;
 app.listen(PORT,() =>{
     console.log(`Server is listening at http://localhost:${PORT}`)
 });
